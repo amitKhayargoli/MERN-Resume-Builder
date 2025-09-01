@@ -1,14 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Story+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Story+Script&display=swap');
 @import "tailwindcss";
 
 
 @theme{
-    --font-display: 'Story Script', cursive;   
+    --font-script: 'Story Script', cursive;   
+    --font-rubik: "Rubik", sans-serif;
+    --font-inter: 'Inter', sans-serif;
+
 }
 
 @layer base {
     html {
-        /* font-family: 'Inter', sans-serif; */
-        font-family: var(--font-display);
+        font-family: 'Inter', sans-serif;
+          /* font-family: "Rubik", sans-serif; */
+        /* font-family: var(--font-display); */
+    }
+
+    .outlet{
+        max-width: 80rem;
+        margin-top: 80px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .primary-btn{
+        @apply bg-violet-500 text-white font-rubik font-medium rounded-sm  px-4 py-2;
+    }
+
+    .secondary-btn{
+        @apply bg-white text-black font-rubik font-medium border-3 border-black rounded-sm px-4 py-1.5;
     }
 }
