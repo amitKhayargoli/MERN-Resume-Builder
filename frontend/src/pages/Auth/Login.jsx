@@ -13,7 +13,15 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <section className="relative overflow-hidden flex-1 min-h-screen bg-[#F1EAFE] flex items-center justify-center">
+    <section className="relative overflow-hidden flex-1 min-h-screen bg-[#F1EAFE] flex flex-col items-center justify-center">
+      <div className="text-center mb-6">
+        <h1 className="text-4xl md:text-5xl font-semibold text-slate-900">
+          Sign in to your account
+        </h1>
+        <p className="mt-3 text-slate-700 font-medium">
+          Welcome back to EasyResume
+        </p>
+      </div>
       {/* Auth card */}
       <div className="relative mx-auto max-w-xl w-full p-6 sm:p-8">
         <div className="rounded-2xl bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
@@ -83,7 +91,7 @@ export default function Login() {
                     href="#"
                     className="text-sm font-medium text-violet-700 hover:text-violet-800"
                   >
-                    Forgot?
+                    Forgot Password?
                   </a>
                 </div>
                 <div className="mt-2 relative">
