@@ -8,6 +8,7 @@ import {
   Linkedin,
   Chrome,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -79,12 +80,12 @@ export default function LoginCard() {
                 >
                   Password
                 </label>
-                <a
-                  href="#"
+                <Link
+                  to="/forgot-password"
                   className="text-sm font-medium text-violet-700 hover:text-violet-800"
                 >
                   Forgot Password?
-                </a>
+                </Link>
               </div>
               <div className="mt-2 relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -127,12 +128,12 @@ export default function LoginCard() {
           {/* Sign up */}
           <p className="mt-6 text-center text-sm text-slate-600 font-medium">
             Don’t have an account?{" "}
-            <a
-              href="#"
+            <Link
+              to="/signup"
               className="text-violet-700 hover:text-violet-800 font-medium"
             >
               Create one
-            </a>
+            </Link>
           </p>
         </div>
       </div>
