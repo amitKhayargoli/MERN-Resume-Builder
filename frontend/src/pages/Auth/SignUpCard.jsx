@@ -9,29 +9,78 @@ import {
   Chrome,
   User,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FaGoogle, FaLinkedin } from "react-icons/fa";
+import { supabase } from "../../lib/supabase.js";
 
 export default function SignUpCard() {
+  const navigate = useNavigate();
+
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+    setMessage("");
+
+    if (!fullName.trim()) return setError("Please enter your full name.");
+    if (!email.trim()) return setError("Please enter your email.");
+    if (password.length < 6)
+      return setError("Password must be at least 6 characters.");
+    if (password !== confirm) return setError("Passwords do not match.");
+
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+        },
+      });
+
+      if (error) setError(error.message);
+      else {
+        setMessage("Account created successfully!");
+        navigate("/dashboard");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="relative mx-auto max-w-xl w-full p-6 sm:p-8">
       <div className="rounded-2xl bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
         <div className="p-6 sm:p-8">
           {/* Headline */}
-          <p className="mb-5 text-violet-700 text-lg font-semibold text-center">
+          <p className="mb-5 font-rubik text-violet-700 text-2xl font-semibold text-center">
             Create your EasyResume account
           </p>
           {/* Social login */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-1 gap-3 mb-6">
             <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-white text-slate-900 px-4 py-2.5 ring-1 ring-slate-200 hover:bg-slate-50 transition font-medium">
-              <Linkedin className="w-4 h-4 stroke-[1.5]" />
-              Sign up with LinkedIn
+              {/* <FaLinkedin className="w-8 h-8 text-[#0A66C2]" /> */}
+              <img src="linkedin.png" className="w-12 h-12"></img>
+              Continue with LinkedIn
             </button>
             <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-white text-slate-900 px-4 py-2.5 ring-1 ring-slate-200 hover:bg-slate-50 transition font-medium">
-              <Chrome className="w-4 h-4 stroke-[1.5]" />
-              Sign up with Google
+              {/* <FaGoogle className="w-8 h-8 text-violet-700 " />
+               */}
+              <img src="google.png" className="w-12 h-12"></img>
+              Continue with Google
             </button>
           </div>
 
@@ -48,7 +97,7 @@ export default function SignUpCard() {
           </div>
 
           {/* Form */}
-          <form className="space-y-5" action="#" method="post" noValidate>
+          <form className="space-y-5" onSubmit={handleSubmit} noValidate>
             {/* Full Name */}
             <div>
               <label
@@ -68,6 +117,8 @@ export default function SignUpCard() {
                   autoComplete="name"
                   required
                   placeholder="John Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   className="block w-full rounded-lg border border-slate-200 bg-white px-10 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60 focus:border-violet-500/60 transition font-medium"
                 />
               </div>
@@ -92,6 +143,8 @@ export default function SignUpCard() {
                   autoComplete="email"
                   required
                   placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="block w-full rounded-lg border border-slate-200 bg-white px-10 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60 focus:border-violet-500/60 transition font-medium"
                 />
               </div>
@@ -116,6 +169,8 @@ export default function SignUpCard() {
                   autoComplete="new-password"
                   required
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="block w-full rounded-lg border border-slate-200 bg-white px-10 pr-10 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60 focus:border-violet-500/60 transition font-medium"
                 />
                 <button
@@ -152,6 +207,8 @@ export default function SignUpCard() {
                   autoComplete="new-password"
                   required
                   placeholder="••••••••"
+                  value={confirm}
+                  onChange={(e) => setConfirm(e.target.value)}
                   className="block w-full rounded-lg border border-slate-200 bg-white px-10 pr-10 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60 focus:border-violet-500/60 transition font-medium"
                 />
                 <button
@@ -169,9 +226,19 @@ export default function SignUpCard() {
               </div>
             </div>
 
+            {error && (
+              <p className="text-red-600 text-sm font-medium">{error}</p>
+            )}
+            {message && (
+              <p className="text-green-700 text-sm font-medium">{message}</p>
+            )}
+
             {/* Submit */}
-            <button className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 text-white px-5 py-3.5 shadow-sm hover:bg-violet-500 transition font-medium">
-              Create Account
+            <button
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 text-white px-5 py-3.5 shadow-sm hover:bg-violet-500 transition font-medium disabled:opacity-60"
+              disabled={loading}
+            >
+              {loading ? "Creating..." : "Create Account"}
               <ArrowRight className="w-5 h-5 stroke-[1.5]" />
             </button>
           </form>
