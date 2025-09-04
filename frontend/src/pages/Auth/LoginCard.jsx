@@ -8,6 +8,8 @@ import {
   Linkedin,
   Chrome,
 } from "lucide-react";
+
+import { FaGoogle, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function LoginCard() {
@@ -18,22 +20,23 @@ export default function LoginCard() {
       <div className="rounded-2xl bg-white/90 shadow-xl ring-1 ring-black/5 backdrop-blur">
         <div className="p-6 sm:p-8">
           {/* Headline */}
-          <p className="mb-5 text-violet-700 text-lg font-semibold text-center">
+          <p className="mb-5 font-rubik text-violet-700 text-2xl font-semibold text-center">
             Welcome back to EasyResume
           </p>
           {/* Social login */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-1 gap-3 mb-6">
             <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-white text-slate-900 px-4 py-2.5 ring-1 ring-slate-200 hover:bg-slate-50 transition font-medium">
-              <Linkedin className="w-4 h-4 stroke-[1.5]" />
+              {/* <FaLinkedin className="w-8 h-8 text-[#0A66C2]" /> */}
+              <img src="linkedin.png" className="w-12 h-12"></img>
               Continue with LinkedIn
             </button>
             <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-white text-slate-900 px-4 py-2.5 ring-1 ring-slate-200 hover:bg-slate-50 transition font-medium">
-              <Chrome className="w-4 h-4 stroke-[1.5]" />
+              {/* <FaGoogle className="w-8 h-8 text-violet-700 " />
+               */}
+              <img src="google.png" className="w-12 h-12"></img>
               Continue with Google
             </button>
           </div>
-
-          {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200"></div>

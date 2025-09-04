@@ -1,9 +1,12 @@
-import React from 'react'
+import { useEffect } from "react";
+import { supabase } from "../../lib/supabase";
 
-const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
+export default function Dashboard() {
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      console.log("Session:", data.session);
+    });
+  }, []);
+
+  return <div>Dashboard</div>;
 }
-
-export default Dashboard
