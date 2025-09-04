@@ -12,6 +12,8 @@ import {
 import { FaGoogle, FaLinkedin } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Loading from "../../components/Loading";
 export default function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -35,6 +37,7 @@ export default function LoginCard() {
 
     if (error) {
       setError(error.message);
+      setLoading(false);
     } else {
       navigate("/dashboard");
     }
@@ -72,7 +75,6 @@ export default function LoginCard() {
               </span>
             </div>
           </div>
-
           {/* Form */}
           <form className="space-y-5" onSubmit={handleLogin} noValidate>
             {/* Email */}

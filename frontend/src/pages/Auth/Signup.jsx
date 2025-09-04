@@ -3,7 +3,7 @@ import SignUpCard from "./SignUpCard";
 
 const Signup = () => {
   return (
-    <section className="relative overflow-hidden flex-1 h-screen bg-[#F1EAFE] flex flex-col items-center">
+    <section className="relative overflow-hidden flex-1 min-h-screen bg-[#F1EAFE] flex flex-col items-center">
       {/* Auth card */}
       <SignUpCard />
     </section>
