@@ -5,6 +5,8 @@ import Layout from "./pages/LandingPage/Layout";
 import ResumeTemplates from "./pages/LandingPage/ResumeTemplates";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
+import { RequireAuth } from "./RequireAuth";
+import Dashboard from "./pages/Home/Dashboard";
 
 const App = () => {
   return (
@@ -16,6 +18,15 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Route>
+
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
