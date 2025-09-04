@@ -10,10 +10,35 @@ import {
 } from "lucide-react";
 
 import { FaGoogle, FaLinkedin } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 export default function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    setError(null);
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setError(error.message);
+    } else {
+      navigate("/dashboard");
+    }
+  };
 
   return (
     <div className="relative mx-auto max-w-xl w-full p-6 sm:p-8">
@@ -49,7 +74,7 @@ export default function LoginCard() {
           </div>
 
           {/* Form */}
-          <form className="space-y-5" action="#" method="post" noValidate>
+          <form className="space-y-5" onSubmit={handleLogin} noValidate>
             {/* Email */}
             <div>
               <label
@@ -69,6 +94,8 @@ export default function LoginCard() {
                   autoComplete="email"
                   required
                   placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="block w-full rounded-lg border border-slate-200 bg-white px-10 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60 focus:border-violet-500/60 transition font-medium"
                 />
               </div>
@@ -101,6 +128,8 @@ export default function LoginCard() {
                   autoComplete="current-password"
                   required
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="block w-full rounded-lg border border-slate-200 bg-white px-10 pr-10 py-2.5 text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60 focus:border-violet-500/60 transition font-medium"
                 />
                 <button
@@ -117,6 +146,11 @@ export default function LoginCard() {
                 </button>
               </div>
             </div>
+
+            {/* Error MESSAGE*/}
+            {error && (
+              <p className="text-red-600 text-sm font-medium">{error}</p>
+            )}
 
             {/* Submit */}
             <button
