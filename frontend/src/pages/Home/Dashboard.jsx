@@ -8,5 +8,9 @@ export default function Dashboard() {
     });
   }, []);
 
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <iframe src="https://lottie.host/embed/394a1814-0659-4e44-a67b-cf806a01fcd9/P4xZaDoZUM.lottie"></iframe>
+    </div>
+  );
 }
